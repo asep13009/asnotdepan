@@ -1,0 +1,11 @@
+- [ ] Add necessary imports (useMemo, useCallback)
+- [ ] Add state for pagination (currentPage, itemsPerPage)
+- [ ] Add state for filters (username, name, email, role)
+- [ ] Add state for sorting (sortConfig)
+- [ ] Add useEffect to reset currentPage when dependencies change
+- [ ] Create processedData with filtering and sorting logic
+- [ ] Add filter row in TableHeader
+- [ ] Add items per page selector
+- [ ] Add pagination buttons at the bottom
+- [ ] Add sorting icons and handleSort function
+- [ ] Update table body to use currentData instead of users
