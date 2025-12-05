@@ -1,1 +1,1 @@
-export const BASE_URL: string = 'http://10.200.229.122/:8080';
+export const BASE_URL: string = 'https://unoutraged-lida-unsliced.ngrok-free.dev';

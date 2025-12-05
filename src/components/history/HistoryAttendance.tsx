@@ -8,6 +8,7 @@ import {
 } from "../ui/table";
 import Badge from "../ui/badge/Badge";
 import DatePickerMonthOnly from "../form/date-picker-month-only";
+import { BASE_URL } from "../../config";
 
 interface AttendanceData {
   id: number;
@@ -61,9 +62,11 @@ export default function HistoryAttendance() {
       // Konversi selectedMonth (YYYY-MM) ke format DD/MM/YYYY untuk tanggal pertama bulan
        const [year, monthNum] = month.split('-');
       const dateParam = `01/${monthNum}/${year}`; // e.g., "01/12/2025"
-      const response = await fetch(`http://localhost:8080/api/history/datas?date=${dateParam}`, {
+     
+      const response = await fetch(`${BASE_URL}/api/history/datas?date=${dateParam}`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true',
         },
       });
       if (!response.ok) {

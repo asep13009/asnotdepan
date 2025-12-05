@@ -52,7 +52,14 @@ export default function UserAccess() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/user/all-user`);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BASE_URL}/api/user/all-user`, {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'ngrok-skip-browser-warning': 'true',
+        },
+      });
+      
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -71,10 +78,12 @@ export default function UserAccess() {
 
   const handleSave = async (user: User) => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`${BASE_URL}/api/user/set-access`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': token ? `Bearer ${token}` : '',
         },
         body: JSON.stringify({
           id: user.id,

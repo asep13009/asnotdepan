@@ -51,7 +51,11 @@ export const AttendanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setError(null);
     try {
       const response = await axios.get(`${BASE_URL}/api/attendance/data-harian`, {
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true',
+          },
+        
       });
       // Asumsikan response.data adalah object (untuk hari ini)
       setTodayAttendance(response.data || null);
