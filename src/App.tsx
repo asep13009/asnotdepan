@@ -27,6 +27,7 @@ import HistoryAttendance from "./components/history/HistoryAttendance";
 import { UserProvider } from "./context/UserContext";
 import { SidebarProvider } from "./context/SidebarContext";
 import UserAccessPage from "./pages/UserAccess";
+import Rekap from "./pages/Rekap";
 
 export default function App() {
   return (
@@ -65,6 +66,11 @@ export default function App() {
             <Route path="/user-access" element={
               <RoleBasedRoute allowedRoles={['ADMIN']}>
                 <UserAccessPage />
+              </RoleBasedRoute>
+            } />
+            <Route path="/rekap-data" element={
+              <RoleBasedRoute allowedRoles={['ADMIN']}>
+                <Rekap />
               </RoleBasedRoute>
             } />
             <Route path="/profile" element={
