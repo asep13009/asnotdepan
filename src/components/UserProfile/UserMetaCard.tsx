@@ -3,9 +3,45 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
-
+import { useState, useEffect } from "react"; // Tambahkan useEffect
+import { useNavigate } from "react-router";
 
 export default function UserMetaCard() {
+    const navigate = useNavigate();
+  // Function to get initials from name
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+  };
+    
+  const [user, setUser] = useState({
+      name: "",
+      email: "",
+    });
+  
+  
+    // useEffect untuk mengambil data dari localStorage saat komponen mount
+    useEffect(() => {
+      const storedUserData = localStorage.getItem('userData'); 
+      if (storedUserData ) {
+        // Parse data user dari JSON string
+        const parsedUser = JSON.parse(storedUserData);
+        setUser({
+          name: parsedUser.name || "", // Gunakan name dari JSON
+          email: parsedUser.email || "", // Gunakan email dari JSON 
+        });
+       
+      } else {
+        // Jika tidak ada data, redirect ke signin (opsional, untuk keamanan)
+        navigate('/signin');
+      }
+    }, [navigate]); // Dependensi navigate untuk menghindari warning
+  
+  
+
   const { isOpen, openModal, closeModal } = useModal();
   const handleSave = () => {
     // Handle save logic here
@@ -18,7 +54,10 @@ export default function UserMetaCard() {
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
             <div className="w-20 h-20 overflow-hidden border border-gray-200 rounded-full dark:border-gray-800">
-              <img src="/images/user/owner.jpg" alt="user" />
+           
+                <div id="profileImage" className="flex items-center justify-center bg-blue-500 text-white font-bold rounded-full h-full w-full">
+                  {getInitials(user.name || "User")}
+                </div>
             </div>
             <div className="order-3 xl:order-2">
               <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">

@@ -1,8 +1,17 @@
 import { useState, useEffect } from "react"; // Tambahkan useEffect
 import { useNavigate } from "react-router";
 
-export default function UserMetaCardOnly() { 
+export default function UserMetaCardOnly() {
   const navigate = useNavigate();
+
+  // Function to get initials from name
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+  };
 
   const [user, setUser] = useState({
     name: "",
@@ -30,7 +39,11 @@ export default function UserMetaCardOnly() {
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
             <div className="w-20 h-20 overflow-hidden border border-gray-200 rounded-full dark:border-gray-800">
-              <img src="/images/user/owner.jpg" alt="user" />
+              {/* <img src="/images/user/owner.jpg" alt="user" /> */}
+              <div id="profileImage" className="flex items-center justify-center bg-blue-500 text-white font-bold rounded-full h-full w-full">
+                {getInitials(user.name)}
+              </div>
+              
             </div>
             <div className="order-3 xl:order-2">
               <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
