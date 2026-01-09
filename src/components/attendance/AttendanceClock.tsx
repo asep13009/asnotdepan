@@ -250,7 +250,12 @@ const AttendanceClock: React.FC = () => {
       let errorMessage = `${isCheckIn ? 'Check-in' : 'Check-out'} failed.`;
       if (error.response) {
         if (error.response.status === 400) {
-          errorMessage = `Bad Request (400): ${error.response.data.message || 'Invalid data sent.'}`;
+          if(error.response!=null){
+            errorMessage = ` ${error.response.data }`;
+          }else{
+            errorMessage = `Bad Request (400): ${error.response.data || 'Invalid data sent.'}`;
+          }
+         
         } else if (error.response.status === 401) {
           errorMessage = 'Unauthorized (401): Please check your token.';
         } else if (error.response.status === 500) {

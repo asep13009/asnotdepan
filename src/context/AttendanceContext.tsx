@@ -12,8 +12,8 @@ interface TodayAttendance {
   longitude_in?: number;
   latitude_out?: number;
   longitude_out?: number;
-  photoUrl_in?: string;
-  photoUrl_out?: string;
+  photo_in?: string;
+  photo_out?: string;
   status?: string;
 }
 
@@ -34,7 +34,8 @@ export const AttendanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [error, setError] = useState<string | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const [currentToken, setCurrentToken] = useState<string | null>(null); // State untuk track token
-
+  
+  const [imageSrc, setImageSrc] = useState<string[]>([]); 
   const triggerRefresh = useCallback(() => {
     setRefreshTrigger(prev => prev + 1);
   }, []);
@@ -50,15 +51,20 @@ export const AttendanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${BASE_URL}/api/attendance/data-harian`, {
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'ngrok-skip-browser-warning': 'true',
-          },
-        
+      // Revoke previous object URLs to prevent memory leaks
+      setImageSrc(currentUrls => {
+        currentUrls.forEach(url => URL.revokeObjectURL(url));
+        return [];
       });
-      // Asumsikan response.data adalah object (untuk hari ini)
-      setTodayAttendance(response.data || null);
+
+      const response = await axios.get(`${BASE_URL}/api/attendance/data-harian`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+
+      }); 
+      let data = response.data || null;  
+      setTodayAttendance(data); 
     } catch (err: any) {
       console.error('Error fetching today attendance:', err);
       setError(err.response?.data?.message || err.message || 'Failed to fetch data.');

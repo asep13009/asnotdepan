@@ -20,8 +20,8 @@ interface AttendanceData {
   longitude_in?: number;
   latitude_out?: number;
   longitude_out?: number;
-  photoUrl_in?: string;
-  photoUrl_out?: string;
+  photo_in?: string;
+  photo_out?: string;
   status?: string;
 }
 
@@ -103,15 +103,16 @@ const AttendanceDataDisplay: React.FC = () => {
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{formatDateTime(item.checkIn || '')}</TableCell>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{formatDateTime(item.checkOut || '')}</TableCell>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {item.photoUrl_in ? (
-                          <img src={item.photoUrl_in} alt="Photo In" className="w-16 h-16 object-cover rounded" />
+                        {item.photo_in ? (
+                          <img src={`data:image/jpeg;base64,${item.photo_in}`}  alt="Photo In" className="w-16 h-16 object-cover rounded" />
+                          // <img src={item.photo_in} alt="Photo In" className="w-16 h-16 object-cover rounded" />
                         ) : (
                           'No Photo'
                         )}
                       </TableCell>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {item.photoUrl_out ? (
-                          <img src={item.photoUrl_out} alt="Photo Out" className="w-16 h-16 object-cover rounded" />
+                        {item.photo_out ? (
+                          <img src={`data:image/jpeg;base64,${item.photo_out}`} alt="Photo Out" className="w-16 h-16 object-cover rounded" />
                         ) : (
                           'No Photo'
                         )}
